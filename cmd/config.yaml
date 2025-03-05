@@ -1,0 +1,8 @@
+ServerPort: ":8080"
+Database:
+  Host: "localhost"
+  Port: "5430"
+  User: "postgres"
+  Password: "..."
+  Name: "..."
+JWTSecret: "qwertyuiop"
