@@ -30,24 +30,21 @@ func ParseLenta(categoryURL string) {
 
 	// Ищем элементы товаров на странице (классы взяты с сайта lenta.com)
 	doc.Find("div.sku-card").Each(func(i int, s *goquery.Selection) {
-		// Извлекаем название
 		name := strings.TrimSpace(s.Find("a.sku-card__title").Text())
 		if name == "" {
-			return // Пропускаем, если название пустое
+			return
 		}
 
 		// Извлекаем цену
 		priceStr := strings.TrimSpace(s.Find("div.sku-card__price-primary").Text())
 		price := parsePrice(priceStr)
 
-		// Извлекаем ссылку
 		link, exists := s.Find("a.sku-card__title").Attr("href")
 		if !exists {
 			link = ""
 		}
 		fullLink := "https://lenta.com" + link
 
-		// Создаём объект Product
 		product := models.Product{
 			Name:          name,
 			Price:         price,
@@ -66,7 +63,6 @@ func ParseLenta(categoryURL string) {
 
 // parsePrice преобразует строку цены в float64
 func parsePrice(priceStr string) float64 {
-	// Удаляем лишние символы (₽, пробелы) и преобразуем в число
 	priceStr = strings.ReplaceAll(priceStr, " ₽", "")
 	priceStr = strings.ReplaceAll(priceStr, " ", "")
 	priceStr = strings.ReplaceAll(priceStr, ",", ".")
