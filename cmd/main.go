@@ -6,6 +6,7 @@ import (
 	"online-Market_project_Golang-Backent/internal/db"
 	"online-Market_project_Golang-Backent/internal/handlers"
 	"online-Market_project_Golang-Backent/internal/middleware"
+	"online-Market_project_Golang-Backent/internal/parser"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,6 +21,10 @@ func main() {
 	if err := db.InitDatabase(cfg); err != nil {
 		log.Fatalf("Ошибка инициализации базы данных: %v", err)
 	}
+
+	// Запуск парсера для двух категорий (можно закомментировать после первого запуска)
+	parser.ParseLenta("https://lenta.com/catalog/product/")
+	parser.ParseLenta("https://lenta.com/catalog/products-prod/")
 
 	// Инициализация Gin
 	r := gin.New()
